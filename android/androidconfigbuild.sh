@@ -290,10 +290,10 @@ then
 		-host-arch $HOST_ARCH $PLATFORM -host-little-endian \
 		-little-endian -no-qt3support -no-largefile \
 		-openssl -pch \
-		-nomake demos -no-multimedia -nomake examples -confirm-license \
+		-nomake demos -no-multimedia -nomake examples -nomake tests -confirm-license \
 		$CFGOPTIONS -prefix $DEST_DIR_QT \
 		-openssl-source $OPENSSL_ROOT \
-		-script -stl -webkit || exit 1
+		-script -stl -no-webkit -no-scripttools -no-svg -qt-sql-sqlite || exit 1
 fi
 
 # This should loop until make succeeds, Workaround for Cygwin/MSYS
