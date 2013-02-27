@@ -6,7 +6,7 @@ unix:!symbian {
 } else {
         SUBDIRS *= codecs
 }
-!contains(QT_CONFIG, no-gui): SUBDIRS *= imageformats iconengines
+!contains(QT_CONFIG, no-gui): SUBDIRS *= iconengines
 !embedded:!qpa:!contains(QT_CONFIG, no-gui):SUBDIRS *= graphicssystems
 embedded:SUBDIRS *=  gfxdrivers decorations mousedrivers kbddrivers
 !win32:!embedded:!mac:!symbian:!contains(QT_CONFIG, no-gui):SUBDIRS *= inputmethods

@@ -184,6 +184,7 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
         } else if (testFormat == "jpg" || testFormat == "jpeg") {
+            qDebug() << "JPEG" << "WRITER 1"
             handler = new QJpegHandler;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG

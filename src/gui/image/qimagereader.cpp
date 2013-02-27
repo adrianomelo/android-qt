@@ -141,9 +141,7 @@
 #ifndef QT_NO_IMAGEFORMAT_PNG
 #include <private/qpnghandler_p.h>
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
 #include <private/qjpeghandler_p.h>
-#endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
 #include <private/qmnghandler_p.h>
 #endif
@@ -165,9 +163,7 @@ enum _qt_BuiltInFormatType {
 #ifndef QT_NO_IMAGEFORMAT_PNG
     _qt_PngFormat,
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
     _qt_JpgFormat,
-#endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
     _qt_MngFormat,
 #endif
@@ -203,9 +199,6 @@ static const _qt_BuiltInFormatStruct _qt_BuiltInFormats[] = {
 #ifndef QT_NO_IMAGEFORMAT_PNG
     {_qt_PngFormat, "png"},
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
-    {_qt_JpgFormat, "jpg"},
-#endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
     {_qt_MngFormat, "mng"},
 #endif
@@ -220,6 +213,7 @@ static const _qt_BuiltInFormatStruct _qt_BuiltInFormats[] = {
     {_qt_PpmFormat, "ppm"},
     {_qt_PgmFormat, "pgm"},
     {_qt_PbmFormat, "pbm"},
+    {_qt_JpgFormat, "jpg"},
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
     {_qt_XbmFormat, "xbm"},
@@ -432,12 +426,10 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                     handler = new QPngHandler;
                 break;
 #endif
-#ifndef QT_NO_IMAGEFORMAT_JPEG
             case _qt_JpgFormat:
                 if (QJpegHandler::canRead(device))
                     handler = new QJpegHandler;
                 break;
-#endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
             case _qt_MngFormat:
                 if (QMngHandler::canRead(device))

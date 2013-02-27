@@ -68,7 +68,7 @@ extern "C" {
 #if defined(Q_OS_UNIXWARE)
 #  define HAVE_BOOLEAN  // libjpeg under Unixware seems to need this
 #endif
-#include <jpeglib.h>
+#include "../../3rdparty/libjpeg/jpeglib.h"
 #ifdef const
 #  undef const          // remove crazy C hackery in jconfig.h
 #endif
