@@ -115,10 +115,6 @@ QAndroidEglFSScreen::QAndroidEglFSScreen(EGLNativeDisplayType display)
 #endif
 
     EGLint major, minor;
-    if (!eglBindAPI(EGL_OPENGL_ES_API)) {
-        qWarning("Could not bind GL_ES API\n");
-        qFatal("EGL error");
-    }
 
     m_display = eglGetDisplay(display);
     if (m_display == EGL_NO_DISPLAY) {
@@ -133,6 +129,11 @@ QAndroidEglFSScreen::QAndroidEglFSScreen(EGLNativeDisplayType display)
     }
 
     qWarning("Initialized display %d %d\n", major, minor);
+
+    if (!eglBindAPI(EGL_OPENGL_ES_API)) {
+        qWarning("Could not bind GL_ES API\n");
+        qFatal("EGL error");
+    }
 
     int swapInterval = 1;
     QByteArray swapIntervalString = qgetenv("QT_QPA_EGLFS_SWAPINTERVAL");
