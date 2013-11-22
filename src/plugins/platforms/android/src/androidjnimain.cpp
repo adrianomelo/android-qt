@@ -91,8 +91,6 @@ static EGLNativeWindowType m_nativeWindow=0;
 static QSemaphore m_waitForWindowSemaphore;
 static bool m_waitForWindow=false;
 
-static const char* const SurfaceClassPathName = "android/view/Surface";
-static jfieldID m_surfaceFieldID=0;
 #endif
 
 static QList<QWindowSystemInterface::TouchPoint> m_touchPoints;
@@ -530,6 +528,7 @@ static void terminateQt(JNIEnv* env, jclass /*clazz*/)
 
 #ifdef ANDROID_PLUGIN_OPENGL
 #if __ANDROID_API__ < 9
+static jfieldID m_surfaceFieldID=0;
 struct FakeNativeWindow
 {
     long long dummyNativeWindow;// force 64 bits alignment
@@ -562,7 +561,6 @@ static void setSurface(JNIEnv *env, jobject /*thiz*/, jobject jSurface)
 #else
     m_surfaceMutex.lock();
     m_nativeWindow = ANativeWindow_fromSurface(env, jSurface);
-    qDebug()<<"setSurface"<<ANativeWindow_fromSurface(env, jSurface)<<(EGLNativeWindowType)env->GetIntField(jSurface, m_surfaceFieldID);
     if (m_waitForWindow)
         m_waitForWindowSemaphore.release();
     if (m_androidPlatformIntegration)
@@ -1142,16 +1140,6 @@ static int registerNativeMethods(JNIEnv* env, const char* className,
     m_resetSoftwareKeyboardMethodID = env->GetStaticMethodID(m_applicationClass, "resetSoftwareKeyboard", "()V");
     m_hideSoftwareKeyboardMethodID = env->GetStaticMethodID(m_applicationClass, "hideSoftwareKeyboard", "()V");
     m_setFullScreenMethodID = env->GetStaticMethodID(m_applicationClass, "setFullScreen", "(Z)V");
-
-#ifdef ANDROID_PLUGIN_OPENGL
-    clazz=env->FindClass(SurfaceClassPathName);
-    if (clazz == NULL)
-    {
-        __android_log_print(ANDROID_LOG_FATAL,"Qt", "Native registration unable to find class '%s'", className);
-        return JNI_FALSE;
-    }
-    m_surfaceFieldID = env->GetFieldID(clazz, ANDROID_VIEW_SURFACE_JNI_ID, "I");
-#endif
 
     jmethodID methodID=env->GetStaticMethodID(m_applicationClass, "activity", "()Landroid/app/Activity;");
     jobject activityObject=env->CallStaticObjectMethod(m_applicationClass, methodID);
