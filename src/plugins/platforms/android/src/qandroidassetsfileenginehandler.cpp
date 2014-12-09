@@ -302,85 +302,38 @@ QAbstractFileEngine * AndroidAssetsFileEngineHandler::create ( const QString & f
 {
     if(fileName.isEmpty())
         return 0;
-    if (-1 == m_necessitasApiLevel)
-        m_necessitasApiLevel = qgetenv("NECESSITAS_API_LEVEL").toInt();
 
-    if (m_necessitasApiLevel>1)
+    if (!fileName.startsWith(QLatin1String("assets:/")))
+        return 0;
+
+    int prefixSize=8;
+
+    path.clear();
+    if (!fileName.endsWith(QLatin1Char('/')))
     {
-        if (!fileName.startsWith(QLatin1String("assets:/")))
-            return 0;
-
-        int prefixSize=8;
-
-        path.clear();
-        if (!fileName.endsWith(QLatin1Char('/')))
-        {
-            path = fileName.toUtf8();
-            AAsset* asset=AAssetManager_open(m_assetManager, path.constData()+prefixSize, AASSET_MODE_BUFFER);
-            if (asset)
-                return new AndroidAbstractFileEngine(asset, fileName);
-        }
-
-        if (!path.size())
-             path = fileName.left(fileName.length()-1).toUtf8();
-
-        QSharedPointer<AndroidAssetDir> ad=m_androidAssetDir->get(fileName);
-        if (ad.isNull())
-        {
-            AAssetDir* assetDir=AAssetManager_openDir(m_assetManager, path.constData()+prefixSize);
-            if (assetDir)
-            {
-                if (AAssetDir_getNextFileName(assetDir))
-                    return new AndroidAbstractFileEngine(m_androidAssetDir->insert(fileName, assetDir), fileName);
-                else
-                    AAssetDir_close(assetDir);
-            }
-        }
-        else
-            return new AndroidAbstractFileEngine(ad, fileName);
-    }
-    else
-    {
-        AAsset* asset;
-        if (fileName[0]==QChar(QLatin1Char('/')))
-            asset=AAssetManager_open(m_assetManager, fileName.toUtf8().constData()+1, AASSET_MODE_BUFFER);
-        else
-        {
-            if (fileName.startsWith(QLatin1String("file://")))
-                asset=AAssetManager_open(m_assetManager, fileName.toUtf8().constData()+7, AASSET_MODE_BUFFER);
-            else
-                asset=AAssetManager_open(m_assetManager, fileName.toUtf8().constData(), AASSET_MODE_BUFFER);
-        }
+        path = fileName.toUtf8();
+        AAsset* asset=AAssetManager_open(m_assetManager, path.constData()+prefixSize, AASSET_MODE_BUFFER);
         if (asset)
             return new AndroidAbstractFileEngine(asset, fileName);
-
-        if (!fileName.endsWith(QChar(QLatin1Char('/'))))
-            return 0;
-        QString dirName;
-        if (fileName[0]==QChar(QLatin1Char('/')))
-            dirName = fileName.mid(1, fileName.size()-2);
-        else
-        {
-            if (fileName.startsWith(QLatin1String("file://")))
-                dirName = fileName.mid(7,fileName.size()-8);
-            else
-                dirName = fileName.left(fileName.size()-1);
-        }
-
-        QSharedPointer<AndroidAssetDir> ad=m_androidAssetDir->get(fileName);
-        if (ad.isNull())
-        {
-            AAssetDir* assetDir=AAssetManager_openDir(m_assetManager, dirName.toUtf8().constData());
-            if (assetDir)
-            {
-                if (AAssetDir_getNextFileName(assetDir))
-                    return new AndroidAbstractFileEngine(m_androidAssetDir->insert(fileName, assetDir), fileName);
-                else
-                    AAssetDir_close(assetDir);
-            }
-        }
-        else
-            return new AndroidAbstractFileEngine(ad, fileName);
     }
+
+    if (!path.size())
+         path = fileName.left(fileName.length()-1).toUtf8();
+
+    QSharedPointer<AndroidAssetDir> ad=m_androidAssetDir->get(fileName);
+    if (ad.isNull())
+    {
+        AAssetDir* assetDir=AAssetManager_openDir(m_assetManager, path.constData()+prefixSize);
+        if (assetDir)
+        {
+            if (AAssetDir_getNextFileName(assetDir))
+                return new AndroidAbstractFileEngine(m_androidAssetDir->insert(fileName, assetDir), fileName);
+            else
+                AAssetDir_close(assetDir);
+        }
+    }
+    else
+        return new AndroidAbstractFileEngine(ad, fileName);
+
     return 0;
 }
