@@ -366,6 +366,7 @@ $$QT_OPENSSL_SOURCE/crypto/pkcs7/pk7_lib.c \
 $$QT_OPENSSL_SOURCE/crypto/pkcs7/pk7_mime.c \
 $$QT_OPENSSL_SOURCE/crypto/pkcs7/pk7_smime.c \
 $$QT_OPENSSL_SOURCE/crypto/pkcs7/pkcs7err.c \
+$$QT_OPENSSL_SOURCE/crypto/pqueue/pqueue.c \
 $$QT_OPENSSL_SOURCE/crypto/rand/md_rand.c \
 $$QT_OPENSSL_SOURCE/crypto/rand/rand_egd.c \
 $$QT_OPENSSL_SOURCE/crypto/rand/rand_err.c \
@@ -470,12 +471,17 @@ $$QT_OPENSSL_SOURCE/crypto/x509v3/v3_skey.c \
 $$QT_OPENSSL_SOURCE/crypto/x509v3/v3_sxnet.c \
 $$QT_OPENSSL_SOURCE/crypto/x509v3/v3_utl.c \
 $$QT_OPENSSL_SOURCE/crypto/x509v3/v3err.c \
+$$QT_OPENSSL_SOURCE/ssl/d1_both.c \
+$$QT_OPENSSL_SOURCE/ssl/d1_lib.c \
+$$QT_OPENSSL_SOURCE/ssl/d1_pkt.c \
+$$QT_OPENSSL_SOURCE/ssl/d1_enc.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_meth.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_srvr.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_clnt.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_lib.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_enc.c \
 $$QT_OPENSSL_SOURCE/ssl/s2_pkt.c \
+$$QT_OPENSSL_SOURCE/ssl/s3_cbc.c \
 $$QT_OPENSSL_SOURCE/ssl/s3_meth.c \
 $$QT_OPENSSL_SOURCE/ssl/s3_srvr.c \
 $$QT_OPENSSL_SOURCE/ssl/s3_clnt.c \

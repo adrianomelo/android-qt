@@ -30,7 +30,7 @@ SRC_DIR_QT=$SRC_DIR_QT/..
 echo $SRC_DIR_QT
 
 #openssl vars
-OPENSSL_PACKAGE="openssl-1.0.0d.tar.gz"
+OPENSSL_PACKAGE="openssl-1.0.0p.tar.gz"
 OPENSSL_NAME=`echo $OPENSSL_PACKAGE|sed 's#\.tar.gz##g'`
 OPENSSL_URL=http://www.openssl.org/source/$OPENSSL_PACKAGE
 OPENSSL_PREFIX=$SRC_DIR_QT/src/3rdparty/android/src/openssl
